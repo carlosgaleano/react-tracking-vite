@@ -1,0 +1,182 @@
+/**
+ * @Author: Carlos Galeano
+ * @Date:   2023-01-19 08:45:56
+ * @Last Modified by:   Carlos Galeano
+ * @Last Modified time: 2025-01-23 16:42:25
+ */
+ body {
+  margin: 0;
+  font-family: 'roboto',  -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+.transparent-card-body {
+  background-color: transparent !important; /* Fondo blanco semi-transparente */
+  border-radius: 0.5px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra ligera */
+}
+
+.transparent-card-body * {
+  background-color: transparent; /* Asegura que los hijos no tengan fondo */
+}
+
+/* Estilos para el borde blanco con sombra */
+.border-white-shadow {
+  border: 2px solid white; /* Borde blanco */
+  box-shadow:
+      0px 0px 0.4px #0d1414,
+      -0.4px -0.4px 0.4px #0d1414,
+      0.4px -0.4px 0.4px #0d1414,
+      -0.4px 0.4px 0.4px #0d1414,
+      0.4px 0.4px 0.4px #0d1414;
+}
+
+/* Estilos combinados para la card */
+.transparent-card-body.border-white-shadow {
+  /* Puedes ajustar el padding si es necesario para que la sombra no se corte */
+  padding: 1.6rem; /* Ejemplo: aumenta un poco el padding */
+  border-radius: 5px; /* Bordes redondeados */
+  background-color: rgba(255, 255, 255, 0.2); /* Fondo blanco semi-transparente */
+  backdrop-filter: blur(5px) saturate(1.2);
+}
+
+.color-white {
+  color: white;
+  font-size: 18px;
+  text-shadow:
+    0px 0px 0.4px #0d1414,
+    -0.4px -0.4px 0.4px #0d1414,
+    0.4px -0.4px 0.4px #0d1414,
+    -0.4px 0.4px 0.4px #0d1414,
+    0.4px 0.4px 0.4px #0d1414; /* Cambiado a 0.4px */
+}
+
+.center1 {
+  margin: auto !important;
+  width: 50% !important;
+  font-size: 18px;
+  font-weight: bold;
+  /* border: 3px solid rgb(25, 122, 167); */
+  padding: 10px;
+}
+
+.cardAcceso {
+ width: 70% !important;
+ margin-left: -350px;
+}
+
+.inputColor {
+  background-color: #c8c9f7 !important;
+}
+
+.sidebar {
+  position: fixed; /* Para que se mantenga en su lugar al deslizar */
+  top: 0;
+  left: 0;
+  height: 70% !important;
+  width: 250px; /* Ancho del menú */
+  background-color: white; /* Color de fondo del menú */
+  transform: translateX(-100%); /* Inicialmente oculto a la izquierda */
+  transition: transform 0.3s ease-in-out; /* Transición suave */
+  z-index: 1050; /* Para que esté por encima del contenido principal */
+  padding-top: 5rem; /* Ajuste para el contenido principal */
+  overflow-y: auto;
+}
+
+.sidebar {
+  position: fixed;
+  top: 67px;
+  left: 0;
+  height: 75%;
+  width: 250px;
+  background-color: rgb(233, 229, 229);
+  transition: transform 0.3s ease-in-out;
+  z-index: 1050;
+  padding-top: 5rem;
+  overflow-y: auto;
+  margin-top: 0; /* Elimina el margen superior */
+  padding-top: 0; /* Elimina el padding superior */
+}
+
+.sidebar.show {
+  transform: translateX(0);
+}
+
+.sidebar.hide {
+  transform: translateX(-100%);
+}
+
+.menuItem:hover{
+  background-color: rgb(42, 97, 107) !important;
+  color: white !important;  
+}
+
+.nav2 {
+ 
+  height: 60px !important;
+}
+
+.exit {
+ 
+    color: red;
+ 
+ 
+  
+
+}
+
+.botton-exit {
+  
+ position: relative;
+  top: 1rem;
+  margin-top: -3.3rem;
+  margin-left: 15.8dvw ;
+  width: 7vw;
+
+
+  text-align: left !important; 
+}
+
+.exit:hover {
+  color: darkred;
+  
+}
+
+.desplazar{
+  color: rgb(20, 31, 128);
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  font-size: 2rem;
+  cursor: pointer;
+
+}
+
+.contenedor {
+
+
+  min-height: 83vh !important ;
+}
+.footer {
+
+  position: absolute;
+  width: 95%; /* Opcional */
+  margin: 0 auto; /* Centra horizontalmente */
+  background-color: #f1f1f1;
+  color: rgb(29, 3, 3);
+  text-align: center;
+  padding: 10px;
+}
+
+.contenedor-login{
+  min-height: 83vh
+
+}
