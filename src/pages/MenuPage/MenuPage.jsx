@@ -1,12 +1,12 @@
 
-//import Navbar2 from '../components/NavBar/Navbar2';
-
+import MenuHome from '../../feactures/menu/components/MenuHome';
 const Menupage=()=>{
 
 
     return(
 
-        <h1> Menu Page</h1> 
+    
+        <MenuHome/>
  
     )
 

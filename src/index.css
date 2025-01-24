@@ -180,3 +180,33 @@ code {
   min-height: 83vh
 
 }
+.row-navPagination{
+  inline-size: auto !important;
+}
+
+/* Loading.css */
+/* Loading.css */
+.loading-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 50% !important ;
+}
+
+.loading-spinner {
+  width: 8rem;
+  height: 8rem;
+}
+
+.loading-text {
+  margin-top: 1rem;
+  animation: blink 1s linear infinite;
+  color: gray;
+}
+
+@keyframes blink {
+  0% { opacity: 1; }
+  50% { opacity: 0; }
+  100% { opacity: 1; }
+}

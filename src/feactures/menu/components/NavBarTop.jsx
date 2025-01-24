@@ -19,7 +19,7 @@ function NavbarTop() {
             </>
 
             {/* Links */}
-            <p className="navbar-nav center1 text-white ml-5">
+            <p className="navbar-nav center1 text-white-50 ml-5">
               
                         Tracking de Ordenes de Entrega
                     

@@ -1,8 +1,8 @@
 import  { useState } from 'react';
 import { Container, Row, Col} from 'react-bootstrap';
 import { FaBars, FaTimes } from 'react-icons/fa';
-import DataDespachos from "../Despachos/DataTable3";
-import DashboardDespachos from '../dashboard/dashboard-despachos';
+import DataDespachos from "../../tracking/components/Despachos";
+import DashboardDespachos from '../../Dashboard/components/DashboardDespachos';
 import Sidebar from './Sidebar';
 import Tooltip from "react-bootstrap/Popover";
 import OverlayTrigger from "react-bootstrap/OverlayTrigger";
@@ -29,7 +29,7 @@ const MainContent = ({ activeMenuItem }) => {
     }
 };
 
-const Menu = () => {
+const MenuHome = () => {
     const [showMenu, setShowMenu] = useState(true);
     const [activeMenuItem, setActiveMenuItem] = useState(null);
 
@@ -73,4 +73,4 @@ const Menu = () => {
     );
 };
 
-export default Menu;
+export default MenuHome;

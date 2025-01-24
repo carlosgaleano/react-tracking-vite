@@ -7,7 +7,7 @@ const Footer = () => {
   const currentYear = new Date().getFullYear(); // Obtiene el año actual
 
   return (
-    <footer className=" py-3 mt-auto footer">
+    <footer className="bg-dark text-white-50 py-3 mt-auto ">
       <Container>
         <Row className="align-items-center">
           <Col md={6} className="text-md-start text-center">
