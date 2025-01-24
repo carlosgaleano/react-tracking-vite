@@ -59,6 +59,7 @@ const LoginPage = () => {
         style={{
           backgroundImage: `url(${backgroundImage2})`,
           backgroundSize: "cover",
+          //backgroundSize: "75%",
           backgroundPosition: "center",
           opacity: 0.9,
         }}

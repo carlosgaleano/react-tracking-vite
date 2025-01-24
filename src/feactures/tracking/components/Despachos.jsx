@@ -6,6 +6,7 @@ import Loading from '../../menu/components/Loading';
 import { NavPagination } from '../../menu/components/NavPagination';
 import DespachosDetalle from './DespachosDetalle';
 import { TbListDetails } from "react-icons/tb";
+import ExcelReader from './ExcelReader';
 
 
 
@@ -90,7 +91,9 @@ const columns = [
                 />
             )}
           
-          
+          <> <h1>Lector de Excel</h1>
+          <ExcelReader /></>
+
           <p className="d-inline  ml-2" >
             <i className="bi bi-bar-chart text-info" style={{ fontSize: 40 }}></i>
           </p>
