@@ -12,8 +12,10 @@ export const useEffectDespachos = (page,setpending) => {
   });
  // setpending(true);
   useEffect(() => {
+    let isActive = true; // Bandera para controlar la ejecución
     getDespachos(page)
     .then((despachos) => {
+      if (isActive) {
       console.log("page", page, "response", despachos, "numero", despachos.current_page);
       setState({
         data: Object.values(despachos.data),
@@ -24,8 +26,17 @@ export const useEffectDespachos = (page,setpending) => {
        
       });
       setpending(false);
+    }
+    }).catch((error) => {
+      if (isActive) {
+        console.error("Error fetching despachos:", error);
+        setpending(false); // Asegúrate de desactivar el estado de "pending" en caso de error
+      }
     });
-  }, [page]);
+    return () => {
+      isActive = false; // Limpia la bandera cuando el componente se desmonta
+    };
+  }, [page, setpending]);
 
   return state;
 };

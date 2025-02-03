@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
-import { getDespachoDetalle } from "../helpers/getDespachoDetalle";
+import { updateDespachos } from "../helpers/setDespachos";
 
-export const useEffectGetDespachoDetalle = (page,setpending,despachoId) => {
+export const useEffectSetForFile = (page,setpending,dataExcel) => {
   const [state, setState] = useState({
     data: [],
     totalRow:null,
@@ -12,7 +12,7 @@ export const useEffectGetDespachoDetalle = (page,setpending,despachoId) => {
   });
  // setpending(true);
   useEffect(() => {
-    getDespachoDetalle(page,despachoId)
+    updateDespachos(page,dataExcel)
     .then((despachos) => {
       console.log("paged", page, "response", despachos, "numero", despachos.current_page);
       setState({
@@ -26,7 +26,7 @@ export const useEffectGetDespachoDetalle = (page,setpending,despachoId) => {
       });
       setpending(false);
     });
-  }, [page,despachoId,setpending]);
+  }, [page,dataExcel,setpending]);
 
   return state;
 };
