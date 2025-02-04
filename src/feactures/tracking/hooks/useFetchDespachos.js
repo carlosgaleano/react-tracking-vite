@@ -1,7 +1,9 @@
 import { useState, useEffect } from "react";
 import { getDespachos } from "../helpers/getDespachos";
 
-export const useEffectDespachos = (page,setpending) => {
+export const useEffectDespachos = (page,setPending, pending,idConsulta =null, idSelect=null ) => {
+ 
+  console.log("idConsulta:", idConsulta, "idSelect:", idSelect);
   const [state, setState] = useState({
     data: [],
     totalRow:null,
@@ -10,10 +12,10 @@ export const useEffectDespachos = (page,setpending) => {
     
   
   });
- // setpending(true);
+  //setpending(true);
   useEffect(() => {
     let isActive = true; // Bandera para controlar la ejecución
-    getDespachos(page)
+    getDespachos(page,idConsulta,idSelect )
     .then((despachos) => {
       if (isActive) {
       console.log("page", page, "response", despachos, "numero", despachos.current_page);
@@ -25,18 +27,18 @@ export const useEffectDespachos = (page,setpending) => {
         rowsPerPage:despachos.per_page
        
       });
-      setpending(false);
+      setPending(false);
     }
     }).catch((error) => {
       if (isActive) {
         console.error("Error fetching despachos:", error);
-        setpending(false); // Asegúrate de desactivar el estado de "pending" en caso de error
+        setPending(false); // Asegúrate de desactivar el estado de "pending" en caso de error
       }
     });
     return () => {
       isActive = false; // Limpia la bandera cuando el componente se desmonta
     };
-  }, [page, setpending]);
+  }, [page, setPending,pending]);
 
   return state;
 };

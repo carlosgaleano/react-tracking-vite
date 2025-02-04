@@ -1,4 +1,4 @@
-import {useState} from 'react';
+import {useState,useEffect} from 'react';
 import DataTable from "react-data-table-component";
 import Button from 'react-bootstrap/Button';
 import {useEffectDespachos} from '../hooks/useFetchDespachos';
@@ -7,7 +7,7 @@ import { NavPagination } from '../../menu/components/NavPagination';
 import DespachosDetalle from './DespachosDetalle';
 import { TbListDetails } from "react-icons/tb";
 import ExcelReader from './ExcelReader';
-
+import FiltroDespachos from './FiltroDespachos';
 
 
 
@@ -15,12 +15,23 @@ import ExcelReader from './ExcelReader';
 
   const [modalShow, setModalShow] = useState(false);
   const [selectedRow, setSelectedRow] = useState(null);
+  const [dataTable1, setData]=useState([]);
+
 
  const [page, setpage] = useState(1);
- const [pending, setpending] = useState(true);
+ const [pending, setPending] = useState(true);
 
 
-const {data:data,currentPage:currentPage,totalrow,totalPage,rowsPerPage}= useEffectDespachos(page,setpending);
+const {data,currentPage:currentPage,totalrow,totalPage,rowsPerPage}= useEffectDespachos(page,setPending,pending);
+
+useEffect(()=>{
+
+if(data){
+setData(data)
+}
+
+})
+
 
 const showData=(row)=>{
   console.log('Selected row:', row); 
@@ -81,7 +92,8 @@ const columns = [
 
   {/* Renderizado condicional del modal */}
   {modalShow && ( // Solo se renderiza si modalShow es true
-                <DespachosDetalle
+               <>
+               <DespachosDetalle
                     show={modalShow}
                     onHide={() => {
                         setModalShow(false);
@@ -89,10 +101,22 @@ const columns = [
                     }}
                     row={selectedRow}
                 />
+              <FiltroDespachos setData={setData} setPending={setPending} />
+
+            </>
             )}
+
+<FiltroDespachos setData={setData} setPending={setPending} />
+
+
+
           
+
+           
+
           <> <h1>Lector de Excel</h1>
-          <ExcelReader /></>
+          <ExcelReader />
+         </>
 
           <p className="d-inline  ml-2" >
             <i className="bi bi-bar-chart text-info" style={{ fontSize: 40 }}></i>
@@ -101,7 +125,7 @@ const columns = [
           <DataTable
             title=" Despachos"
             columns={columns}
-            data={data}
+            data={dataTable1}
             progressPending={pending}
             progressComponent={<Loading />}
             //pagination
@@ -114,7 +138,7 @@ const columns = [
             //selectableRowsComponent={BootyCheckbox}
           />
          
-           <NavPagination data={{setpage,totalrow,totalPage,currentPage,setpending, pending}} />
+           <NavPagination data={{setpage,totalrow,totalPage,currentPage,setPending, pending}} />
 
         </>
       );

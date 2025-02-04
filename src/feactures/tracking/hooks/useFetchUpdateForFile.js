@@ -24,9 +24,9 @@ export const useEffectSetForFile = (page,setpending,dataExcel) => {
         rowsPerPage:despachos?.per_page
         
       });
-      setpending(false);
+     // setpending(false);
     });
-  }, [page,dataExcel,setpending]);
+  }, [page,dataExcel]);
 
   return state;
 };
