@@ -10,6 +10,7 @@ const ExportExcel = (filtro =null) => {
     const [showModal, setShowModal] = useState(false);
 
     const [blink, setBlink] = useState(true);
+    const [message, setMessage] = useState('Por favor, espere mientras se obtienen los datos..');
 
 useEffect(() => {
   const interval = setInterval(() => {
@@ -34,6 +35,7 @@ useEffect(() => {
 
   const handleExport = () => {
     setShowModal(true);
+    setMessage('Por favor, espere mientras se obtienen los datos.....');
     toast.info('Generando archivo Excel...');
     const data = [
         { name: 'John Doe', age: 30, email: 'john.doe@example.com' },
@@ -42,9 +44,13 @@ useEffect(() => {
     
       exportToExcel(data, 'my_excel_file');
       setTimeout(() => {
+
+        setMessage('Generado Archivo Excel...');
+      }, 1500);
+      setTimeout(() => {
         setShowModal(false);
         toast.success('Archivo Excel generado y descargado correctamente.');
-    }, 3000);
+    }, 3500);
 //toast.success('Archivo Excel generado y descargado correctamente.');
   };
 
@@ -64,7 +70,7 @@ useEffect(() => {
       </Modal.Header>
       <Modal.Body>
       <span style={{ opacity: blink ? 1 : 0 }}>
-        Por favor, espere mientras se genera el archivo Excel...
+        {message}
         </span>
       </Modal.Body>
     </Modal>
