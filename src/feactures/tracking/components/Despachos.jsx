@@ -22,6 +22,9 @@ import FiltroDespachos from './FiltroDespachos';
  const [pending, setPending] = useState(true);
 
 
+ 
+
+
 const {data,currentPage:currentPage,totalrow,totalPage,rowsPerPage}= useEffectDespachos(page,setPending,pending);
 
 useEffect(()=>{
@@ -30,7 +33,7 @@ if(data){
 setData(data)
 }
 
-})
+}, [data]); 
 
 
 const showData=(row)=>{
@@ -101,12 +104,12 @@ const columns = [
                     }}
                     row={selectedRow}
                 />
-              <FiltroDespachos setData={setData} setPending={setPending} />
+             
 
             </>
             )}
 
-<FiltroDespachos setData={setData} setPending={setPending} />
+<FiltroDespachos setData={setData} setPending={setPending} pending={pending} />
 
 
 

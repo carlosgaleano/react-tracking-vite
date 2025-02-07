@@ -1,37 +1,36 @@
 import { useEffect } from "react";
 import { Form, InputGroup, Button, Row, Col } from "react-bootstrap";
 import {useState} from 'react';
-import {useEffectDespachos} from '../hooks/useFetchDespachos';
+import {useEffectDespachosFilter} from '../hooks/useFetcDespachoFilter';
+import { GrClearOption } from "react-icons/gr";
+import ExportExcel from "./ExcelExport";
 
 
 const FiltroDespachos = ({setData, setPending},pending) => {
 
-  const [idConsulta,setIdConsulta] =useState("");
-  const [idSelect,setIdSelect]=useState("");
+  const [idConsulta, setIdConsulta] = useState("");
+  const [idSelect, setIdSelect] = useState("1");
   const [page, setPage] = useState(1);
-  const [triggerFetch, setTriggerFetch] = useState("");  // Variable para activar la actualización
-  const [data, setLocalData] = useState(null);  
+  const [refresh, setRefresh] = useState(0); // Nuevo estado para refrescar
 
-  // Llamada al hook dentro de useEffect para asegurar que solo se ejecute cuando sea necesario
-  const consultaData = useEffectDespachos(page, setPending,pending, idConsulta, idSelect);
+  
 
-  // Cuando los datos obtenidos cambian, actualiza el estado local y global
-  useEffect(() => {
-    if (idConsulta && idSelect) {
-    if (consultaData?.data) {
-      setLocalData(consultaData.data);  // Guardamos los datos obtenidos
-      setData(consultaData.data);       // Actualizamos el estado global con los datos obtenidos
-    }
-  }
-  }, [idConsulta, idSelect,consultaData, setData]);
+  
+  const consultaData = useEffectDespachosFilter(page , setPending, idConsulta, idSelect, refresh);
 
-  // Se ejecuta cuando se presiona el botón
   const consultarDespacho = () => {
-    console.log("Consultar despacho:", idConsulta, idSelect);
-    setPending(true);  // Activamos la carga
-    
-    setTriggerFetch((prev) => !prev);  // Esto activa el cambio en triggerFetch
+    if ( !idSelect) return;
+    setPending(true);
+    setRefresh(prev => prev + 1); // Forzar nueva búsqueda
   };
+
+  // Actualizar datos globales cuando haya nuevos resultados
+  useEffect(() => {
+    if (consultaData.data) {
+      setData(consultaData.data);
+    
+    }
+  }, [consultaData.data, setData, setPending]);
 
   return (
     
@@ -50,7 +49,7 @@ const FiltroDespachos = ({setData, setPending},pending) => {
       </InputGroup>
     </Col>
 
-    <Col xs={2}>
+    <Col xs={1}>
       <Form.Select aria-label="Default select ID"
       value={idSelect}
       onChange={(e)=>setIdSelect(e.target.value)}
@@ -61,8 +60,23 @@ const FiltroDespachos = ({setData, setPending},pending) => {
       </Form.Select>
     </Col>
 
-    <Col xs={2}>
+    <Col xs={1}>
       <Button onClick={consultarDespacho}>Consultar</Button>
+    </Col>
+    <Col xs={1}>
+      <Button onClick={() => {
+        setIdConsulta("");
+        setIdSelect("1");
+        setRefresh(prev => prev + 1); // Forzar nueva búsqueda
+        setPending(true);
+      }}
+      className="btn btn-warning"
+      >
+        <GrClearOption />
+      </Button>
+    </Col>
+    <Col xs={1}>
+      <ExportExcel />
     </Col>
   </Row>
   );

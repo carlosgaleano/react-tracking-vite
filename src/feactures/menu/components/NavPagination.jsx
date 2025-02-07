@@ -8,7 +8,7 @@ export const NavPagination = ({ data }) => {
     totalrow,
     totalPage,
     currentPage,
-    setpending,
+    setPending,
     pending,
   } = data;
 
@@ -30,7 +30,7 @@ export const NavPagination = ({ data }) => {
             <button
               className="page-link"
               onClick={() => {
-                setpending(true);
+                setPending(true);
                 setpage(currentPage - 1);
               }}
               disabled={previosDisabled}
@@ -45,7 +45,7 @@ export const NavPagination = ({ data }) => {
             <button
               className="ml-1 page-link "
               onClick={() => {
-                setpending(true);
+                setPending(true);
                 setpage(currentPage + 1);
               }}
               disabled={nextDisabled}
@@ -56,7 +56,7 @@ export const NavPagination = ({ data }) => {
             </button>
           </li>
           <li className="ml-1">
-            <ToolBar data={{ setpage, setpending,totalPage }} />
+            <ToolBar data={{ setpage, setPending,totalPage }} />
           </li>
 
           <div className="d-inline border border-light rounded ml-1 mb-3">

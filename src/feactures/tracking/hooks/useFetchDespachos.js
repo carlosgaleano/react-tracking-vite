@@ -38,7 +38,7 @@ export const useEffectDespachos = (page,setPending, pending,idConsulta =null, id
     return () => {
       isActive = false; // Limpia la bandera cuando el componente se desmonta
     };
-  }, [page, setPending,pending]);
+  }, [page,idConsulta,idSelect]);
 
   return state;
 };

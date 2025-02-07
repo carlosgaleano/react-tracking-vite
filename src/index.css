@@ -1,8 +1,8 @@
 /**
  * @Author: Carlos Galeano
  * @Date:   2023-01-19 08:45:56
- * @Last Modified by:   Carlos Galeano
- * @Last Modified time: 2025-01-23 16:42:25
+ * @Last Modified by: mikey.zhaopeng
+ * @Last Modified time: 2025-02-07 18:09:21
  */
  body {
   margin: 0;
@@ -209,4 +209,13 @@ code {
   0% { opacity: 1; }
   50% { opacity: 0; }
   100% { opacity: 1; }
+}
+.blink {
+  animation: blinker 1s linear infinite;
+}
+
+@keyframes blinker {
+  50% {
+    opacity: 0;
+  }
 }
