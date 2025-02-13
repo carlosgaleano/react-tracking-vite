@@ -5,6 +5,7 @@ import Footer from './feactures/menu/components/Footbar';
 import NavbarTop from './feactures/menu/components/NavBarTop';
 import Menu from './routes/Menu';
 import {useAuthStore} from './feactures/auth/store/auth';
+import 'react-toastify/dist/ReactToastify.css';
 
 const ProtectedLayout = ({ isAllowed }) => {
     if (!isAllowed) {
