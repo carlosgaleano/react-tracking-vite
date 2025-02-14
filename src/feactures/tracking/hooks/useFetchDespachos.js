@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { getDespachos } from "../helpers/getDespachos";
 
-export const useEffectDespachos = (page,setPending, pending,idConsulta =null, idSelect=null ) => {
+export const useEffectDespachos = (page,setPending, pending,idConsulta =null, idSelect=null, refresh=null,setRefresh=null ) => {
  
   console.log("idConsulta:", idConsulta, "idSelect:", idSelect);
   const [state, setState] = useState({
@@ -12,9 +12,19 @@ export const useEffectDespachos = (page,setPending, pending,idConsulta =null, id
     
   
   });
+
+  const [isFetching, setIsFetching] = useState(false);
   //setpending(true);
   useEffect(() => {
+
+  
+    if (isFetching) return; 
+
+   
     let isActive = true; // Bandera para controlar la ejecución
+    setIsFetching(true);
+
+    console.log("useEffectDespachos ejecutado");
     getDespachos(page,idConsulta,idSelect )
     .then((despachos) => {
       if (isActive) {
@@ -33,8 +43,13 @@ export const useEffectDespachos = (page,setPending, pending,idConsulta =null, id
       if (isActive) {
         console.error("Error fetching despachos:", error);
         setPending(false); // Asegúrate de desactivar el estado de "pending" en caso de error
+        throw error; 
       }
-    });
+    }).finally(() => {
+      if (isActive) {
+          setIsFetching(false); // Marcar que la llamada ha terminado
+      }
+  });
     return () => {
       isActive = false; // Limpia la bandera cuando el componente se desmonta
     };

@@ -20,12 +20,12 @@ import FiltroDespachos from './FiltroDespachos';
 
  const [page, setpage] = useState(1);
  const [pending, setPending] = useState(true);
-
+ const [refresh, setRefresh] = useState(0);
 
  
 
 
-const {data,currentPage:currentPage,totalrow,totalPage,rowsPerPage}= useEffectDespachos(page,setPending,pending);
+const {data,currentPage:currentPage,totalrow,totalPage,rowsPerPage}= useEffectDespachos(page,setPending,pending,null,null,1,setRefresh);
 
 useEffect(()=>{
 
