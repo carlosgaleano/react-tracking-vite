@@ -1,15 +1,17 @@
 import { ToolBar } from "./ToolBar";
 import { SelectRowTable } from "./SelectRowTable";
+import {useAuthStore} from '../../../feactures/auth/store/auth'; 
+
 //import { compact } from "lodash/compact";
 export const NavPagination = ({ data }) => {
  
+  const { loading, setLoading } = useAuthStore();
   const {
     setpage,
     totalrow,
     totalPage,
     currentPage,
-    setPending,
-    pending,
+   
   } = data;
 
 
@@ -22,7 +24,7 @@ export const NavPagination = ({ data }) => {
   return (
     <>
       <nav
-      style={{ display: pending ? 'none' : 'block' }}
+      style={{ display: loading ? 'none' : 'block' }}
       
       >
         <ul className="pagination">
@@ -30,7 +32,7 @@ export const NavPagination = ({ data }) => {
             <button
               className="page-link"
               onClick={() => {
-                setPending(true);
+              
                 setpage(currentPage - 1);
               }}
               disabled={previosDisabled}
@@ -45,7 +47,7 @@ export const NavPagination = ({ data }) => {
             <button
               className="ml-1 page-link "
               onClick={() => {
-                setPending(true);
+                
                 setpage(currentPage + 1);
               }}
               disabled={nextDisabled}
@@ -56,7 +58,7 @@ export const NavPagination = ({ data }) => {
             </button>
           </li>
           <li className="ml-1">
-            <ToolBar data={{ setpage, setPending,totalPage }} />
+            <ToolBar data={{ setpage,totalPage }} />
           </li>
 
           <div className="d-inline border border-light rounded ml-1 mb-3">

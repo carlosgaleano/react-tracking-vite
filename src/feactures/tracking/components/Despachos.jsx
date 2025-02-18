@@ -8,6 +8,7 @@ import DespachosDetalle from './DespachosDetalle';
 import { TbListDetails } from "react-icons/tb";
 import ExcelReader from './ExcelReader';
 import FiltroDespachos from './FiltroDespachos';
+import {useAuthStore} from '../../../feactures/auth/store/auth'; 
 
 
 
@@ -16,16 +17,16 @@ import FiltroDespachos from './FiltroDespachos';
   const [modalShow, setModalShow] = useState(false);
   const [selectedRow, setSelectedRow] = useState(null);
   const [dataTable1, setData]=useState([]);
-
+  const { loading, setLoading } = useAuthStore();
 
  const [page, setpage] = useState(1);
- const [pending, setPending] = useState(true);
- const [refresh, setRefresh] = useState(0);
+ //const [pending, setPending] = useState(true);
+ //const [refresh, setRefresh] = useState(0);
 
  
 
 
-const {data,currentPage:currentPage,totalrow,totalPage,rowsPerPage}= useEffectDespachos(page,setPending,pending,null,null,1,setRefresh);
+const {data,currentPage:currentPage,totalrow,totalPage,rowsPerPage}= useEffectDespachos(page,null,null);
 
 useEffect(()=>{
 
@@ -109,7 +110,7 @@ const columns = [
             </>
             )}
 
-<FiltroDespachos setData={setData} setPending={setPending} pending={pending} />
+<FiltroDespachos setData={setData} />
 
 
 
@@ -129,7 +130,7 @@ const columns = [
             title=" Despachos"
             columns={columns}
             data={dataTable1}
-            progressPending={pending}
+            progressPending={loading}
             progressComponent={<Loading />}
             //pagination
             //paginationComponent={BootyPagination}
@@ -141,7 +142,7 @@ const columns = [
             //selectableRowsComponent={BootyCheckbox}
           />
          
-           <NavPagination data={{setpage,totalrow,totalPage,currentPage,setPending, pending}} />
+           <NavPagination data={{setpage,totalrow,totalPage,currentPage}} />
 
         </>
       );

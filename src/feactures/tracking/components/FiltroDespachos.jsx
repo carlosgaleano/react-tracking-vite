@@ -6,7 +6,7 @@ import { GrClearOption } from "react-icons/gr";
 import ExportExcel from "./ExcelExport";
 
 
-const FiltroDespachos = ({setData, setPending},pending) => {
+const FiltroDespachos = ({setData}) => {
 
   const [idConsulta, setIdConsulta] = useState("");
   const [idSelect, setIdSelect] = useState("1");
@@ -16,11 +16,11 @@ const FiltroDespachos = ({setData, setPending},pending) => {
   
 
   
-  const consultaData = useEffectDespachosFilter(page , setPending, idConsulta, idSelect, refresh);
+  const consultaData = useEffectDespachosFilter(page, idConsulta, idSelect, refresh);
 
   const consultarDespacho = () => {
     if ( !idSelect) return;
-    setPending(true);
+   
     setRefresh(prev => prev + 1); // Forzar nueva búsqueda
   };
 
@@ -30,7 +30,7 @@ const FiltroDespachos = ({setData, setPending},pending) => {
       setData(consultaData.data);
     
     }
-  }, [consultaData.data, setData, setPending]);
+  }, [consultaData.data, setData]);
 
   return (
     
@@ -68,7 +68,7 @@ const FiltroDespachos = ({setData, setPending},pending) => {
         setIdConsulta("");
         setIdSelect("1");
         setRefresh(prev => prev + 1); // Forzar nueva búsqueda
-        setPending(true);
+     
       }}
       className="btn btn-warning"
       >

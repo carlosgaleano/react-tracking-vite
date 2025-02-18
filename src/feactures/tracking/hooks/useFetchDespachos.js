@@ -1,59 +1,58 @@
 import { useState, useEffect } from "react";
 import { getDespachos } from "../helpers/getDespachos";
+import {useAuthStore} from '../../../feactures/auth/store/auth'; 
 
-export const useEffectDespachos = (page,setPending, pending,idConsulta =null, idSelect=null, refresh=null,setRefresh=null ) => {
- 
-  console.log("idConsulta:", idConsulta, "idSelect:", idSelect);
+
+export const useEffectDespachos = (page, idConsulta = null, idSelect = null) => {
   const [state, setState] = useState({
     data: [],
-    totalRow:null,
-    totalPage:null,
-    currentPage:null,
-    
-  
+    totalRow: null,
+    totalPage: null,
+    currentPage: null,
   });
-
-  const [isFetching, setIsFetching] = useState(false);
-  //setpending(true);
+ // const [loading, setLoading] = useState(true);
+ const { loading, setLoading } = useAuthStore(); 
   useEffect(() => {
+    const controller = new AbortController(); // Creamos un AbortController
+    const signal = controller.signal; // Obtenemos la señal
 
-  
-    if (isFetching) return; 
+    let isActive = true;
+    setLoading(true);
 
-   
-    let isActive = true; // Bandera para controlar la ejecución
-    setIsFetching(true);
-
-    console.log("useEffectDespachos ejecutado");
-    getDespachos(page,idConsulta,idSelect )
-    .then((despachos) => {
-      if (isActive) {
-      console.log("page", page, "response", despachos, "numero", despachos.current_page);
-      setState({
-        data: Object.values(despachos.data),
-        totalPage:despachos.last_page,
-        totalrow:despachos.total,
-        currentPage: despachos.current_page ,
-        rowsPerPage:despachos.per_page
-       
+    getDespachos(page, idConsulta, idSelect, signal) // Pasamos la señal a getDespachos
+      .then((despachos) => {
+        if (isActive && !signal.aborted) { // Verificamos que no se haya abortado la petición
+          setState({
+            data: Object.values(despachos.data),
+            totalPage: despachos.last_page,
+            totalrow: despachos.total,
+            currentPage: despachos.current_page,
+            rowsPerPage: despachos.per_page,
+          });
+        }
+      })
+      .catch((error) => {
+        if (isActive) {
+            if (error.name === 'AbortError') {
+                console.log('Fetch aborted');
+                return; // Salimos del catch si es un error de aborto
+            }
+          console.error("Error fetching despachos:", error);
+        }
+      })
+      .finally(() => {
+        if (isActive) {
+          setLoading(false);
+        }
       });
-      setPending(false);
-    }
-    }).catch((error) => {
-      if (isActive) {
-        console.error("Error fetching despachos:", error);
-        setPending(false); // Asegúrate de desactivar el estado de "pending" en caso de error
-        throw error; 
-      }
-    }).finally(() => {
-      if (isActive) {
-          setIsFetching(false); // Marcar que la llamada ha terminado
-      }
-  });
-    return () => {
-      isActive = false; // Limpia la bandera cuando el componente se desmonta
-    };
-  }, [page,idConsulta,idSelect]);
 
-  return state;
+    return () => {
+      isActive = false;
+      controller.abort(); // Abortamos la petición anterior al desmontar el componente o cambiar las dependencias
+    };
+  }, [page, idConsulta, idSelect]);
+
+  return { ...state, loading };
 };
+
+

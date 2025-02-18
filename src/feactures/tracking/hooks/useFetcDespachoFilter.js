@@ -1,20 +1,24 @@
 // useFetchDespachos.js
 import { useState, useEffect } from "react";
 import { getDespachos } from "../helpers/getDespachos";
+import {useAuthStore} from '../../../feactures/auth/store/auth'; 
 
 
-export const useEffectDespachosFilter = (page , setPending, idConsulta, idSelect, refresh) => {
+export const useEffectDespachosFilter = (page , idConsulta, idSelect, refresh) => {
     const [state, setState] = useState({
       data: [],
       totalRow: null,
       totalPage: null,
       currentPage: null,
     });
+
+   const { loading, setLoading } = useAuthStore(); 
   
     useEffect(() => {
       let isActive = true;
+      setLoading(true);
       setState(prev => ({ ...prev, data: [] })); // Limpiar datos previos
-  
+      
       getDespachos(page, idConsulta, idSelect)
         .then(despachos => {
           if (isActive) {
@@ -25,7 +29,7 @@ export const useEffectDespachosFilter = (page , setPending, idConsulta, idSelect
               currentPage: despachos.current_page,
              
             });
-            setPending(false);
+            setLoading(false); 
           }
         })
         .catch(error => console.error("Error:", error));
@@ -33,5 +37,5 @@ export const useEffectDespachosFilter = (page , setPending, idConsulta, idSelect
       return () => { isActive = false; };
     }, [page, refresh]); // Dependencias clave
   
-    return state;
+    return {...state,loading};
   };

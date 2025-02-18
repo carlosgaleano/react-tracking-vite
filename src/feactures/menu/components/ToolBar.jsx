@@ -7,7 +7,7 @@ import { useForm } from '../../../hooks/useForm';
 
 export const  ToolBar=({data})=> {
 
-  const {setpage,setPending,totalPage}=data;
+  const {setpage,totalPage}=data;
   const { formState, onInputChange, onResetForm, topage } = useForm({
     topage: '',
   
@@ -15,7 +15,7 @@ export const  ToolBar=({data})=> {
 const changePage=()=>{
 
   if (topage >=1 &&  topage<=totalPage   ) {
-    setPending(true);setpage(topage);
+    setpage(topage);
   } else {
     console.log('fuera de rango de paginas');
   }
