@@ -9,6 +9,8 @@ import { TbListDetails } from "react-icons/tb";
 import ExcelReader from './ExcelReader';
 import FiltroDespachos from './FiltroDespachos';
 import {useAuthStore} from '../../../feactures/auth/store/auth'; 
+import { useDespachosStore } from "../store/despachos";
+import { getDespachos } from "../helpers/getDespachos";
 
 
 
@@ -16,26 +18,36 @@ import {useAuthStore} from '../../../feactures/auth/store/auth';
 
   const [modalShow, setModalShow] = useState(false);
   const [selectedRow, setSelectedRow] = useState(null);
-  const [dataTable1, setData]=useState([]);
-  const { loading, setLoading } = useAuthStore();
+  //const [dataTable1, setData]=useState([]);
+ 
 
- const [page, setpage] = useState(1);
+ //const [page, setpage] = useState(1);
  //const [pending, setPending] = useState(true);
  //const [refresh, setRefresh] = useState(0);
 
  
+ //const { loading, setLoading } = useAuthStore();
+ const { data, setData, page, setPage, totalPage,setTotalPage, loading, setLoading } = useDespachosStore(); // Obtén los datos del nuevo store
 
 
-const {data,currentPage:currentPage,totalrow,totalPage,rowsPerPage}= useEffectDespachos(page,null,null);
 
-useEffect(()=>{
+ //const {data,currentPage:currentPage,totalrow,totalPage,rowsPerPage}= useEffectDespachos(page,null,null);
 
-if(data){
-setData(data)
-}
 
-}, [data]); 
+const dataResult=useEffectDespachos(page, null, null);
 
+useEffect(() => {
+  if (dataResult.data) {
+    setData(dataResult.data);
+    setTotalPage(dataResult.totalPage);
+  
+  }
+},  [dataResult.data, setData, setTotalPage]);
+
+useEffect(() => {
+  // Este useEffect se ejecuta solo una vez al montar el componente
+  setPage(1); // Establece la página 1 al cargar el componente
+}, []);
 
 const showData=(row)=>{
   console.log('Selected row:', row); 
@@ -46,8 +58,8 @@ const showData=(row)=>{
 
 }
 
-console.log('datos,',data[1]);
-console.log('page actual',currentPage);
+//console.log('datos,',data[1]);
+//console.log('page actual',currentPage);
 const columns = [
     {
       name: "Orden de Entrega",
@@ -110,8 +122,8 @@ const columns = [
             </>
             )}
 
-<FiltroDespachos setData={setData} />
-
+ <FiltroDespachos  />
+ 
 
 
           
@@ -129,7 +141,7 @@ const columns = [
           <DataTable
             title=" Despachos"
             columns={columns}
-            data={dataTable1}
+            data={data}
             progressPending={loading}
             progressComponent={<Loading />}
             //pagination
@@ -142,8 +154,10 @@ const columns = [
             //selectableRowsComponent={BootyCheckbox}
           />
          
-           <NavPagination data={{setpage,totalrow,totalPage,currentPage}} />
-
+         <NavPagination
+        
+      />
+ 
         </>
       );
     };

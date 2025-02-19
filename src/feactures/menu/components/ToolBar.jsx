@@ -4,10 +4,13 @@ import ButtonToolbar from 'react-bootstrap/ButtonToolbar';
 import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
 import { useForm } from '../../../hooks/useForm';
+import { useDespachosStore } from "../../tracking/store/despachos";
 
-export const  ToolBar=({data})=> {
 
-  const {setpage,totalPage}=data;
+export const  ToolBar=()=> {
+
+  const {  setData, page, setPage,totalRows, totalPage,setTotalPage, loading, setLoading } = useDespachosStore();
+
   const { formState, onInputChange, onResetForm, topage } = useForm({
     topage: '',
   
@@ -15,7 +18,7 @@ export const  ToolBar=({data})=> {
 const changePage=()=>{
 
   if (topage >=1 &&  topage<=totalPage   ) {
-    setpage(topage);
+    setPage(topage);
   } else {
     console.log('fuera de rango de paginas');
   }

@@ -1,22 +1,15 @@
 import { ToolBar } from "./ToolBar";
 import { SelectRowTable } from "./SelectRowTable";
-import {useAuthStore} from '../../../feactures/auth/store/auth'; 
-
+import { useDespachosStore } from "../../tracking/store/despachos";
 //import { compact } from "lodash/compact";
-export const NavPagination = ({ data }) => {
+export const NavPagination = () => {
  
-  const { loading, setLoading } = useAuthStore();
-  const {
-    setpage,
-    totalrow,
-    totalPage,
-    currentPage,
-   
-  } = data;
+  const {  setData, page, setPage,totalRows, totalPage,setTotalPage, loading, setLoading } = useDespachosStore();
+ 
 
 
-  const nextDisabled = currentPage === parseInt(totalPage)  ;
-  const previosDisabled = currentPage === 1;
+  const nextDisabled = page === parseInt(totalPage)  ;
+  const previosDisabled = page === 1;
 
   console.log('estado ',previosDisabled);
 
@@ -33,7 +26,7 @@ export const NavPagination = ({ data }) => {
               className="page-link"
               onClick={() => {
               
-                setpage(currentPage - 1);
+                setPage(page - 1);
               }}
               disabled={previosDisabled}
               aria-disabled={previosDisabled}
@@ -48,7 +41,7 @@ export const NavPagination = ({ data }) => {
               className="ml-1 page-link "
               onClick={() => {
                 
-                setpage(currentPage + 1);
+                setPage(page + 1);
               }}
               disabled={nextDisabled}
               aria-disabled={nextDisabled}
@@ -58,14 +51,14 @@ export const NavPagination = ({ data }) => {
             </button>
           </li>
           <li className="ml-1">
-            <ToolBar data={{ setpage,totalPage }} />
+            <ToolBar  />
           </li>
 
           <div className="d-inline border border-light rounded ml-1 mb-3">
             <li className="d-inline ml-1">
               <span>
                 <strong> Item:</strong>
-                {totalrow}
+                {totalRows}
               </span>
             </li>
             <li className="d-inline ml-1">
@@ -76,7 +69,7 @@ export const NavPagination = ({ data }) => {
             </li>
             <li className="d-inline ml-1">
               <span>
-                <strong>Actual Page</strong> :{currentPage}
+                <strong>Actual Page</strong> :{page}
               </span>
             </li>
             <li className="d-inline ml-1">

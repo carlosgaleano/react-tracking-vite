@@ -1,8 +1,7 @@
 // useFetchDespachos.js
 import { useState, useEffect } from "react";
 import { getDespachos } from "../helpers/getDespachos";
-import {useAuthStore} from '../../../feactures/auth/store/auth'; 
-
+import { useDespachosStore } from "../store/despachos";
 
 export const useEffectDespachosFilter = (page , idConsulta, idSelect, refresh) => {
     const [state, setState] = useState({
@@ -12,7 +11,7 @@ export const useEffectDespachosFilter = (page , idConsulta, idSelect, refresh) =
       currentPage: null,
     });
 
-   const { loading, setLoading } = useAuthStore(); 
+   const { loading, setLoading } = useDespachosStore(); 
   
     useEffect(() => {
       let isActive = true;

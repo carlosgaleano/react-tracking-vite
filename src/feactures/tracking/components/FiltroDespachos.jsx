@@ -4,16 +4,17 @@ import {useState} from 'react';
 import {useEffectDespachosFilter} from '../hooks/useFetcDespachoFilter';
 import { GrClearOption } from "react-icons/gr";
 import ExportExcel from "./ExcelExport";
+import { useDespachosStore } from "../store/despachos";
 
 
-const FiltroDespachos = ({setData}) => {
+const FiltroDespachos = () => {
 
   const [idConsulta, setIdConsulta] = useState("");
   const [idSelect, setIdSelect] = useState("1");
   const [page, setPage] = useState(1);
   const [refresh, setRefresh] = useState(0); // Nuevo estado para refrescar
 
-  
+  const {  setData } = useDespachosStore();
 
   
   const consultaData = useEffectDespachosFilter(page, idConsulta, idSelect, refresh);
