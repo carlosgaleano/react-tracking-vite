@@ -4,7 +4,7 @@ import { useAuthStore } from '../feactures/auth/store/auth';
 
 const authApi= axios.create({
    // baseURL: "http://localhost/api/v2",
-    baseURL: "https://apitsa.logytechchile.cl/api",
+    baseURL: "https://apidespachos.logytechchile.cl/api",
     withCredentials:true
 })
 

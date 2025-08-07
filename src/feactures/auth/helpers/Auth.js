@@ -5,7 +5,7 @@ export const LoginRequest = async (email, password) => {
 
 
   try {
-    return await axios.post("/login", { email, password });
+    return await axios.post("/Autentication", { username:email, password });
   } catch (error) {
     console.log("error", error);
 

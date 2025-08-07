@@ -110,7 +110,7 @@ const columns = [
             </>
             )}
 
-<FiltroDespachos setData={setData} />
+      <FiltroDespachos setData={setData} />
 
 
 
@@ -119,7 +119,7 @@ const columns = [
            
 
           <> <h1>Lector de Excel</h1>
-          <ExcelReader />
+          <ExcelReader setData={setData} />
          </>
 
           <p className="d-inline  ml-2" >

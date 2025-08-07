@@ -4,7 +4,7 @@ import axios from '../../../libs/axios';
 export const getDespachos = async (page, idConsulta = null, idSelect = null, signal) => {
   console.trace("getDespachos llamado con page:", page, "idConsulta:", idConsulta, "idSelect:", idSelect);
   try {
-    const { data } = await axios.post(`/despachosx?page=${page}`, {
+    const { data } = await axios.post(`/getDataTracking?page=${page}`, {
       idConsulta: idConsulta,
       idSelect: idSelect,
     }, {

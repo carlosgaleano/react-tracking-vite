@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import * as XLSX from 'xlsx';
 import { useEffectSetForFile } from '../hooks/useFetchUpdateForFile';
 
-const ExcelReader = () => {
+const ExcelReader = ({setData}) => {
   const [excelData, setExcelData] = useState([]);
   const [error, setError] = useState(null);
   const [file, setFile] = useState(null); // Store the file
@@ -46,7 +46,13 @@ const ExcelReader = () => {
 
   const {data:data} = useEffectSetForFile(1, false, excelData);
   
-
+  //if (data){setData(data);}  // Update global data with the fetched data
+   useEffect(() => {
+        // Esta función se ejecutará cada vez que 'data' cambie.
+        if (data) {
+            setData(data);
+        }
+    }, [data]);
   return (
     <div>
       <input type="file" accept=".xlsx, .xls" onChange={handleFileUpload} />
@@ -62,7 +68,7 @@ const ExcelReader = () => {
               ))}
             </tr>
           </thead>
-          <tbody>
+         {/*  <tbody>
             {excelData.slice(1).map((row, rowIndex) => (
               <tr key={rowIndex}>
                 {Object.values(row).map((cell, cellIndex) => ( // More robust cell rendering
@@ -70,7 +76,7 @@ const ExcelReader = () => {
                 ))}
               </tr>
             ))}
-          </tbody>
+          </tbody> */}
         </table>
       )}
     </div>

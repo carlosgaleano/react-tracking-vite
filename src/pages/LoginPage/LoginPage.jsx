@@ -38,8 +38,8 @@ const LoginPage = () => {
   };
 
   const { formState, onInputChange, onResetForm, email, password } = useForm({
-    email: "cags20031@gmail.com",
-    password: "api2024",
+    email: "UserDespachosLogy",
+    password: "apiGet2025",
   });
   useEffect(() => {
     if (alertShow) {
@@ -91,11 +91,11 @@ const LoginPage = () => {
                     className="mb-3 color-white"
                     controlId="formEmail"
                   >
-                    <Form.Label>Email</Form.Label>
+                    <Form.Label>Usuario</Form.Label>
                     <Form.Control
-                      type="email"
-                      placeholder="Enter email"
-                      name="email"
+                      type="text"
+                      placeholder="Enter Usuario"
+                      name="username"
                       className="inputColor"
                       value={email}
                       onChange={onInputChange}
