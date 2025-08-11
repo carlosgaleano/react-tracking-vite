@@ -9,7 +9,7 @@ import { TbListDetails } from "react-icons/tb";
 import ExcelReader from './ExcelReader';
 import FiltroDespachos from './FiltroDespachos';
 import {useAuthStore} from '../../../feactures/auth/store/auth'; 
-
+import  { usePaginationStore } from '../../menu/store/paginationStore';
 
 
  const DataGridDespachos = ()=>{
@@ -19,22 +19,33 @@ import {useAuthStore} from '../../../feactures/auth/store/auth';
   const [dataTable1, setData]=useState([]);
   const { loading, setLoading } = useAuthStore();
 
- const [page, setpage] = useState(1);
+
+ //const [page, setpage] = useState(1);
  //const [pending, setPending] = useState(true);
  //const [refresh, setRefresh] = useState(0);
 
+  const { currentPage:currentPageDespachos, setPage, updatePagination, isExcelData,excelData,resetToDatabase ,setIsExcelData  } = usePaginationStore();
+
+
+  const { 
+    data: dbData, 
+    totalrow: dbTotalRow, 
+    totalPage: dbTotalPage 
+  } = useEffectDespachos(currentPageDespachos, null, null, !isExcelData);
+
  
 
-
-const {data,currentPage:currentPage,totalrow,totalPage,rowsPerPage}= useEffectDespachos(page,null,null);
-
-useEffect(()=>{
-
-if(data){
-setData(data)
-}
-
-}, [data]); 
+  useEffect(() => {
+    // Si los datos NO son de Excel, actualizamos con los datos de la base de datos
+    if (!isExcelData && dbData) {
+      setData(dbData);
+      updatePagination(currentPageDespachos, dbTotalPage, dbTotalRow);
+    } 
+    // Si los datos SÍ son de Excel, simplemente mostramos los datos del store
+    else if (isExcelData) {
+      // No hacemos nada aquí, ya que el estado se actualizó en ExcelReader
+    }
+  }, [dbData, isExcelData]);
 
 
 const showData=(row)=>{
@@ -46,8 +57,8 @@ const showData=(row)=>{
 
 }
 
-console.log('datos,',data[1]);
-console.log('page actual',currentPage);
+//console.log('datos,',data[1]);
+//console.log('page actual',currentPage);
 const columns = [
     {
       name: "Orden de Entrega",
@@ -110,7 +121,7 @@ const columns = [
             </>
             )}
 
-      <FiltroDespachos setData={setData} />
+      <FiltroDespachos setData={setData} setIsExcelData={setIsExcelData} />
 
 
 
@@ -118,8 +129,9 @@ const columns = [
 
            
 
-          <> <h1>Lector de Excel</h1>
-          <ExcelReader setData={setData} />
+          <> <h1>Lector de Excel  {isExcelData} </h1>
+
+          <ExcelReader  />
          </>
 
           <p className="d-inline  ml-2" >
@@ -129,7 +141,7 @@ const columns = [
           <DataTable
             title=" Despachos"
             columns={columns}
-            data={dataTable1}
+             data={isExcelData ? excelData : dataTable1} // <-- Muestra datos de Excel o de la base de datos
             progressPending={loading}
             progressComponent={<Loading />}
             //pagination
@@ -142,7 +154,7 @@ const columns = [
             //selectableRowsComponent={BootyCheckbox}
           />
          
-           <NavPagination data={{setpage,totalrow,totalPage,currentPage}} />
+           <NavPagination  />
 
         </>
       );

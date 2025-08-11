@@ -4,15 +4,17 @@ import {useState} from 'react';
 import {useEffectDespachosFilter} from '../hooks/useFetcDespachoFilter';
 import { GrClearOption } from "react-icons/gr";
 import ExportExcel from "./ExcelExport";
+import  { usePaginationStore } from '../../menu/store/paginationStore';
 
 
-const FiltroDespachos = ({setData}) => {
+
+const FiltroDespachos = ({setData,setIsExcelData}) => {
 
   const [idConsulta, setIdConsulta] = useState("");
   const [idSelect, setIdSelect] = useState("1");
-  const [page, setPage] = useState(1);
+  //const [page, setPage] = useState(1);
   const [refresh, setRefresh] = useState(0); // Nuevo estado para refrescar
-
+ const { setPage,page } = usePaginationStore();
   
 
   
@@ -20,8 +22,9 @@ const FiltroDespachos = ({setData}) => {
 
   const consultarDespacho = () => {
     if ( !idSelect) return;
-   
-    setRefresh(prev => prev + 1); // Forzar nueva búsqueda
+   setIsExcelData(false); // Aseguramos que no estamos en modo Excel
+   setPage(1); 
+   setRefresh(prev => prev + 1); // Forzar nueva búsqueda
   };
 
   // Actualizar datos globales cuando haya nuevos resultados
@@ -65,6 +68,8 @@ const FiltroDespachos = ({setData}) => {
     </Col>
     <Col xs={1}>
       <Button onClick={() => {
+        setIsExcelData(false);
+          setPage(1);
         setIdConsulta("");
         setIdSelect("1");
         setRefresh(prev => prev + 1); // Forzar nueva búsqueda

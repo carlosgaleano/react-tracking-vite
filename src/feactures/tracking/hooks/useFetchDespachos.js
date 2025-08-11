@@ -3,7 +3,7 @@ import { getDespachos } from "../helpers/getDespachos";
 import {useAuthStore} from '../../../feactures/auth/store/auth'; 
 
 
-export const useEffectDespachos = (page, idConsulta = null, idSelect = null) => {
+export const useEffectDespachos = (page, idConsulta = null, idSelect = null, isExcelData) => {
   const [state, setState] = useState({
     data: [],
     totalRow: null,
@@ -21,7 +21,7 @@ export const useEffectDespachos = (page, idConsulta = null, idSelect = null) => 
 
     getDespachos(page, idConsulta, idSelect, signal) // Pasamos la señal a getDespachos
       .then((despachos) => {
-        if (isActive && !signal.aborted) { // Verificamos que no se haya abortado la petición
+        if (isActive && !signal.aborted  && isExcelData) { // Verificamos que no se haya abortado la petición
           setState({
             data: Object.values(despachos.data),
             totalPage: despachos.last_page,
@@ -45,12 +45,13 @@ export const useEffectDespachos = (page, idConsulta = null, idSelect = null) => 
           setLoading(false);
         }
       });
-
+ 
     return () => {
       isActive = false;
+       setLoading(false);
       controller.abort(); // Abortamos la petición anterior al desmontar el componente o cambiar las dependencias
     };
-  }, [page, idConsulta, idSelect]);
+  }, [page, idConsulta, idSelect,isExcelData]);
 
   return { ...state, loading };
 };

@@ -4,10 +4,15 @@ import ButtonToolbar from 'react-bootstrap/ButtonToolbar';
 import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
 import { useForm } from '../../../hooks/useForm';
+import  { usePaginationStore } from '../../menu/store/paginationStore';
 
-export const  ToolBar=({data})=> {
 
-  const {setpage,totalPage}=data;
+
+export const  ToolBar=()=> {
+
+  //const {setpage,totalPage}=data;
+    const {  setPage,totalPage } = usePaginationStore();
+  
   const { formState, onInputChange, onResetForm, topage } = useForm({
     topage: '',
   
@@ -15,7 +20,7 @@ export const  ToolBar=({data})=> {
 const changePage=()=>{
 
   if (topage >=1 &&  topage<=totalPage   ) {
-    setpage(topage);
+    setPage(topage);
   } else {
     console.log('fuera de rango de paginas');
   }

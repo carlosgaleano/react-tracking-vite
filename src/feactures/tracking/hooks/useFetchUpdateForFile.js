@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { updateDespachos } from "../helpers/setDespachos";
 
-export const useEffectSetForFile = (page,setpending,dataExcel) => {
+export const useEffectSetForFile = (page,setpending,dataExcel, file) => {
   const [state, setState] = useState({
     data: [],
     totalRow:null,
@@ -26,7 +26,7 @@ export const useEffectSetForFile = (page,setpending,dataExcel) => {
       });
      // setpending(false);
     });
-  }, [page,dataExcel]);
+  }, [page,dataExcel, file]);
 
   return state;
 };

@@ -1,11 +1,14 @@
 import { useState, useEffect } from 'react';
 import * as XLSX from 'xlsx';
 import { useEffectSetForFile } from '../hooks/useFetchUpdateForFile';
+import  { usePaginationStore } from '../../menu/store/paginationStore';
 
-const ExcelReader = ({setData}) => {
+
+const ExcelReader = () => {
   const [excelData, setExcelData] = useState([]);
   const [error, setError] = useState(null);
   const [file, setFile] = useState(null); // Store the file
+  const { setExcelDataSource, currentPage:currentPageExcel} = usePaginationStore();
 
   const handleFileUpload = (e) => {
     const selectedFile = e.target.files[0];
@@ -44,19 +47,22 @@ const ExcelReader = ({setData}) => {
 
 
 
-  const {data:data} = useEffectSetForFile(1, false, excelData);
+  const {data:dataExcel,currentPage:currentPageApi,totalrow,totalPage,rowsPerPage} = useEffectSetForFile(currentPageExcel, false, excelData);
   
   //if (data){setData(data);}  // Update global data with the fetched data
    useEffect(() => {
         // Esta función se ejecutará cada vez que 'data' cambie.
-        if (data) {
-            setData(data);
+        if (dataExcel && file) {
+           setExcelDataSource(dataExcel,totalPage, totalrow,currentPageApi);
+           console.log("Datos de Excel cargados en el store:", dataExcel);
+           
         }
-    }, [data]);
+    }, [dataExcel,file]);
   return (
     <div>
       <input type="file" accept=".xlsx, .xls" onChange={handleFileUpload} />
 
+      
       {error && <div style={{ color: 'red' }}>{error}</div>}
 
       {excelData.length > 0 && (
