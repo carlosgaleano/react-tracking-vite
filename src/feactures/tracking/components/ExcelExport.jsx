@@ -5,6 +5,7 @@ import { FaRegFileExcel } from "react-icons/fa";
 import { Button, Modal } from "react-bootstrap";
 import { toast } from "react-toastify";
 import { useFetDespachoDataExcel } from "../hooks/useFetDespachoDataExcel";
+import  { usePaginationStore } from '../../menu/store/paginationStore';
 
 const ExportExcel = (filtro = null) => {
   const [showModal, setShowModal] = useState(false);
@@ -13,7 +14,27 @@ const ExportExcel = (filtro = null) => {
   const [refresh, setRefresh] = useState(0);
   const isGenerating = useRef(false);
 
-  const getDataExcel = useFetDespachoDataExcel(refresh);
+  const { isExcelData, excelData } = usePaginationStore();
+
+    let getDataExcel = [];
+  /* if (!isExcelData) {
+    getDataExcel=excelData || [];
+  }else {
+  getDataExcel = useFetDespachoDataExcel(refresh);
+  } */
+
+  getDataExcel = useFetDespachoDataExcel(refresh);
+
+useEffect(() => {
+
+  if (isExcelData) {
+    console.log("isExcelData is true, using excelData:", excelData);
+    getDataExcel.data = excelData || [];
+        console.log("isExcelData is true, using excelData:", getDataExcel);
+
+  }
+
+}, [isExcelData]);
 
   // ⬇️ Función para manejar el clic del botón de exportar
   const handleExport = () => {

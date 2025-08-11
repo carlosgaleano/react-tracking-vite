@@ -8,7 +8,7 @@ const ExcelReader = () => {
   const [excelData, setExcelData] = useState([]);
   const [error, setError] = useState(null);
   const [file, setFile] = useState(null); // Store the file
-  const { setExcelDataSource, currentPage:currentPageExcel} = usePaginationStore();
+  const { setExcelDataSource, currentPage:currentPageExcel,setFiltro} = usePaginationStore();
 
   const handleFileUpload = (e) => {
     const selectedFile = e.target.files[0];
@@ -54,8 +54,9 @@ const ExcelReader = () => {
         // Esta función se ejecutará cada vez que 'data' cambie.
         if (dataExcel && file) {
            setExcelDataSource(dataExcel,totalPage, totalrow,currentPageApi);
+           setFiltro(excelData); // Set the filter to the file name
            console.log("Datos de Excel cargados en el store:", dataExcel);
-           
+
         }
     }, [dataExcel,file]);
   return (

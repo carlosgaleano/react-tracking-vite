@@ -5,14 +5,16 @@ export const usePaginationStore = create((set) => ({
   currentPage: 1,
   totalPage: 1,
   totalrow: 0,
+  loading: false, // Estado para controlar la carga
   isExcelData: false, // <-- Nuevo estado para controlar el origen de los datos
   excelData: [],     // <-- Nuevo estado para almacenar los datos del Excel
-
+ filtroExcel:[],
   // ... (otras acciones)
   setPage: (page) => set({ currentPage: page }),
   setTotalPages: (pages) => set({ totalPage: pages }),
   setTotalRows: (rows) => set({ totalrow: rows }),
   setIsExcelData: (isExcel) => set({ isExcelData: isExcel }),
+  setFiltro: (filtro) => set({ filtroExcel:filtro }),
   updatePagination: (newCurrentPage, newTotalPages, newTotalRows) => set({
     currentPage: newCurrentPage,
     totalPage: newTotalPages,
