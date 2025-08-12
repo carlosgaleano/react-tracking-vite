@@ -7,6 +7,7 @@ export const useEffectSetForFile = (page,setpending,dataExcel, file) => {
     totalRow:null,
     totalPage:null,
     currentPage:null,
+    itemDespachos:[],
     
   
   });
@@ -21,7 +22,8 @@ export const useEffectSetForFile = (page,setpending,dataExcel, file) => {
         totalPage:despachos?.last_page,
         totalrow:despachos?.total,
         currentPage: despachos?.current_page ,
-        rowsPerPage:despachos?.per_page
+        rowsPerPage:despachos?.per_page,
+        itemDespachos: despachos?.itemsheader || [],
         
       });
      // setpending(false);

@@ -14,7 +14,7 @@ const ExportExcel = (filtro = null) => {
   const [refresh, setRefresh] = useState(0);
   const isGenerating = useRef(false);
 
-  const { isExcelData, excelData } = usePaginationStore();
+  const { isExcelData, excelData, filtroExcel } = usePaginationStore();
 
     let getDataExcel = [];
   /* if (!isExcelData) {
@@ -23,8 +23,9 @@ const ExportExcel = (filtro = null) => {
   getDataExcel = useFetDespachoDataExcel(refresh);
   } */
 
-  getDataExcel = useFetDespachoDataExcel(refresh);
+  getDataExcel = useFetDespachoDataExcel(refresh,filtroExcel);
 
+  console.log("getDataExcel:", filtroExcel);
 useEffect(() => {
 
   if (isExcelData) {

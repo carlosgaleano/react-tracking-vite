@@ -14,7 +14,7 @@ const FiltroDespachos = ({setData,setIsExcelData}) => {
   const [idSelect, setIdSelect] = useState("1");
   //const [page, setPage] = useState(1);
   const [refresh, setRefresh] = useState(0); // Nuevo estado para refrescar
- const { setPage,page } = usePaginationStore();
+ const { setPage,page,setFiltro } = usePaginationStore();
   
 
   
@@ -23,6 +23,7 @@ const FiltroDespachos = ({setData,setIsExcelData}) => {
   const consultarDespacho = () => {
     if ( !idSelect) return;
    setIsExcelData(false); // Aseguramos que no estamos en modo Excel
+   setFiltro([]); // Limpiamos el filtro antes de la consulta
    setPage(1); 
    setRefresh(prev => prev + 1); // Forzar nueva búsqueda
   };
@@ -70,6 +71,7 @@ const FiltroDespachos = ({setData,setIsExcelData}) => {
       <Button onClick={() => {
         setIsExcelData(false);
           setPage(1);
+             setFiltro([]);
         setIdConsulta("");
         setIdSelect("1");
         setRefresh(prev => prev + 1); // Forzar nueva búsqueda

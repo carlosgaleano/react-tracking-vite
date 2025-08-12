@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from 'react'; // Import useRef
 import { getDataForExcel } from '../helpers/getDataForExcel';
 
-export const useFetDespachoDataExcel = (refresh) => {
+export const useFetDespachoDataExcel = (refresh, itemDespachos) => {
     const [state, setState] = useState({
         data: [],
         loading: true,
@@ -19,7 +19,7 @@ export const useFetDespachoDataExcel = (refresh) => {
 
             setState(prevState => ({ ...prevState, loading: true, error: null }));
 
-            getDataForExcel()
+            getDataForExcel(null, null,null, itemDespachos)
                 .then((data) => {
                     if (isActive) {
                         setState({ data, loading: false, error: null });

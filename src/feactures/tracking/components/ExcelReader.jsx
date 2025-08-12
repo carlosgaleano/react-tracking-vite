@@ -15,6 +15,22 @@ const ExcelReader = () => {
     setFile(selectedFile); // Set the file in state
   };
 
+const transformStringToArrayWithMap = (inputString) => {
+  // 1. Split the string into an array of number strings
+  
+  let miCadena = inputString.toString();
+  const numbers = miCadena.split(',');
+
+  // 2. Use map() to create a new array where each number is wrapped in its own array
+  const nestedNumbers = numbers.map(number => [number.trim()]);
+
+  console.log("nestedNumbers:", nestedNumbers);
+  // 3. Prepend the "Despachos" header and return the final array
+  return [['Despachos'], ...nestedNumbers];
+};
+
+
+
   
   useEffect(() => {
     if (file) {  // Only process if a file is selected
@@ -47,15 +63,17 @@ const ExcelReader = () => {
 
 
 
-  const {data:dataExcel,currentPage:currentPageApi,totalrow,totalPage,rowsPerPage} = useEffectSetForFile(currentPageExcel, false, excelData);
+  const {data:dataExcel,currentPage:currentPageApi,totalrow,totalPage,itemDespachos,rowsPerPage} = useEffectSetForFile(currentPageExcel, false, excelData);
   
   //if (data){setData(data);}  // Update global data with the fetched data
    useEffect(() => {
         // Esta función se ejecutará cada vez que 'data' cambie.
         if (dataExcel && file) {
            setExcelDataSource(dataExcel,totalPage, totalrow,currentPageApi);
-           setFiltro(excelData); // Set the filter to the file name
-           console.log("Datos de Excel cargados en el store:", dataExcel);
+            //console.log("Datos de Excel actualizados en el store:", filterData(dataExcel) );
+           const dataConsulta= transformStringToArrayWithMap(itemDespachos);
+           setFiltro(dataConsulta); // Set the filter to the file name
+           console.log("Datos de Excel cargados en el store:",dataConsulta );
 
         }
     }, [dataExcel,file]);
